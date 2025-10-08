@@ -134,90 +134,31 @@ const seedHierarchyData = async () => {
       `, [hierarchy.id, hierarchy.name, hierarchy.level_id, hierarchy.parent_id, hierarchy.company_id, hierarchy.can_attach_device]);
     }
 
-    // Comprehensive device data
+    // ONLY MPFM devices: remove non-MPFM devices and keep MPFM devices as requested
     const deviceData = [
-      // Arabco devices
-      // Well-101 (hierarchy_id: 4) - Multiple devices
+      // Arabco MPFM devices
       { id: 1, company_id: 1, hierarchy_id: 4, device_type_id: 1, serial_number: 'MPFM-ARB-101', metadata: { model: 'MPFM-X1', install_date: '2024-01-15', status: 'active', location: 'Ghawar-Well-101' } },
-      { id: 2, company_id: 1, hierarchy_id: 4, device_type_id: 2, serial_number: 'PRES-ARB-101', metadata: { model: 'PS-200', install_date: '2024-01-15', status: 'active', location: 'Ghawar-Well-101' } },
-      { id: 3, company_id: 1, hierarchy_id: 4, device_type_id: 3, serial_number: 'TEMP-ARB-101', metadata: { model: 'TS-150', install_date: '2024-01-15', status: 'active', location: 'Ghawar-Well-101' } },
-      
-      // Well-102 (hierarchy_id: 5) - Multiple devices
       { id: 4, company_id: 1, hierarchy_id: 5, device_type_id: 1, serial_number: 'MPFM-ARB-102', metadata: { model: 'MPFM-X2', install_date: '2024-02-01', status: 'active', location: 'Ghawar-Well-102' } },
-      { id: 5, company_id: 1, hierarchy_id: 5, device_type_id: 2, serial_number: 'PRES-ARB-102', metadata: { model: 'PS-201', install_date: '2024-02-01', status: 'active', location: 'Ghawar-Well-102' } },
-      { id: 6, company_id: 1, hierarchy_id: 5, device_type_id: 4, serial_number: 'FLOW-ARB-102', metadata: { model: 'FM-300', install_date: '2024-02-01', status: 'active', location: 'Ghawar-Well-102' } },
-      
-      // Well-103 (hierarchy_id: 6) - Multiple devices
       { id: 7, company_id: 1, hierarchy_id: 6, device_type_id: 1, serial_number: 'MPFM-ARB-103', metadata: { model: 'MPFM-X3', install_date: '2024-02-15', status: 'active', location: 'Ghawar-Well-103' } },
-      { id: 8, company_id: 1, hierarchy_id: 6, device_type_id: 3, serial_number: 'TEMP-ARB-103', metadata: { model: 'TS-151', install_date: '2024-02-15', status: 'active', location: 'Ghawar-Well-103' } },
-      { id: 9, company_id: 1, hierarchy_id: 6, device_type_id: 5, serial_number: 'VIB-ARB-103', metadata: { model: 'VS-100', install_date: '2024-02-15', status: 'active', location: 'Ghawar-Well-103' } },
-      
-      // Well-201 (hierarchy_id: 8) - Multiple devices
       { id: 10, company_id: 1, hierarchy_id: 8, device_type_id: 1, serial_number: 'MPFM-ARB-201', metadata: { model: 'MPFM-Y1', install_date: '2024-03-01', status: 'active', location: 'Shaybah-Well-201' } },
-      { id: 11, company_id: 1, hierarchy_id: 8, device_type_id: 2, serial_number: 'PRES-ARB-201', metadata: { model: 'PS-202', install_date: '2024-03-01', status: 'active', location: 'Shaybah-Well-201' } },
-      { id: 12, company_id: 1, hierarchy_id: 8, device_type_id: 4, serial_number: 'FLOW-ARB-201', metadata: { model: 'FM-301', install_date: '2024-03-01', status: 'active', location: 'Shaybah-Well-201' } },
-      
-      // Well-202 (hierarchy_id: 9) - Multiple devices
       { id: 13, company_id: 1, hierarchy_id: 9, device_type_id: 1, serial_number: 'MPFM-ARB-202', metadata: { model: 'MPFM-Y2', install_date: '2024-03-15', status: 'active', location: 'Shaybah-Well-202' } },
-      { id: 14, company_id: 1, hierarchy_id: 9, device_type_id: 3, serial_number: 'TEMP-ARB-202', metadata: { model: 'TS-152', install_date: '2024-03-15', status: 'active', location: 'Shaybah-Well-202' } },
-      
-      // Well-301 (hierarchy_id: 12) - Multiple devices
       { id: 15, company_id: 1, hierarchy_id: 12, device_type_id: 1, serial_number: 'MPFM-ARB-301', metadata: { model: 'MPFM-Z1', install_date: '2024-04-01', status: 'active', location: 'Berri-Well-301' } },
-      { id: 16, company_id: 1, hierarchy_id: 12, device_type_id: 2, serial_number: 'PRES-ARB-301', metadata: { model: 'PS-203', install_date: '2024-04-01', status: 'active', location: 'Berri-Well-301' } },
-      { id: 17, company_id: 1, hierarchy_id: 12, device_type_id: 5, serial_number: 'VIB-ARB-301', metadata: { model: 'VS-101', install_date: '2024-04-01', status: 'active', location: 'Berri-Well-301' } },
-      
-      // Well-302 (hierarchy_id: 13) - Multiple devices
       { id: 18, company_id: 1, hierarchy_id: 13, device_type_id: 1, serial_number: 'MPFM-ARB-302', metadata: { model: 'MPFM-Z2', install_date: '2024-04-15', status: 'active', location: 'Berri-Well-302' } },
-      { id: 19, company_id: 1, hierarchy_id: 13, device_type_id: 4, serial_number: 'FLOW-ARB-302', metadata: { model: 'FM-302', install_date: '2024-04-15', status: 'active', location: 'Berri-Well-302' } },
-      
-      // Well-401 (hierarchy_id: 17) - Multiple devices
       { id: 20, company_id: 1, hierarchy_id: 17, device_type_id: 1, serial_number: 'MPFM-ARB-401', metadata: { model: 'MPFM-W1', install_date: '2024-05-01', status: 'active', location: 'RedSea-Well-401' } },
-      { id: 21, company_id: 1, hierarchy_id: 17, device_type_id: 2, serial_number: 'PRES-ARB-401', metadata: { model: 'PS-204', install_date: '2024-05-01', status: 'active', location: 'RedSea-Well-401' } },
-      { id: 22, company_id: 1, hierarchy_id: 17, device_type_id: 3, serial_number: 'TEMP-ARB-401', metadata: { model: 'TS-153', install_date: '2024-05-01', status: 'active', location: 'RedSea-Well-401' } },
-      
-      // Well-402 (hierarchy_id: 18) - Multiple devices
       { id: 23, company_id: 1, hierarchy_id: 18, device_type_id: 1, serial_number: 'MPFM-ARB-402', metadata: { model: 'MPFM-W2', install_date: '2024-05-15', status: 'active', location: 'RedSea-Well-402' } },
-      { id: 24, company_id: 1, hierarchy_id: 18, device_type_id: 5, serial_number: 'VIB-ARB-402', metadata: { model: 'VS-102', install_date: '2024-05-15', status: 'active', location: 'RedSea-Well-402' } },
-      
-      // Saher Flow devices
-      // Demo Well A1 (hierarchy_id: 22) - Multiple devices
+
+      // Saher Flow MPFM devices
       { id: 25, company_id: 2, hierarchy_id: 22, device_type_id: 1, serial_number: 'MPFM-SHR-A1', metadata: { model: 'MPFM-Demo-1', install_date: '2024-06-01', status: 'active', location: 'Demo-Alpha-A1' } },
-      { id: 26, company_id: 2, hierarchy_id: 22, device_type_id: 2, serial_number: 'PRES-SHR-A1', metadata: { model: 'PS-Demo-1', install_date: '2024-06-01', status: 'active', location: 'Demo-Alpha-A1' } },
-      { id: 27, company_id: 2, hierarchy_id: 22, device_type_id: 3, serial_number: 'TEMP-SHR-A1', metadata: { model: 'TS-Demo-1', install_date: '2024-06-01', status: 'active', location: 'Demo-Alpha-A1' } },
-      
-      // Demo Well A2 (hierarchy_id: 23) - Multiple devices
       { id: 28, company_id: 2, hierarchy_id: 23, device_type_id: 1, serial_number: 'MPFM-SHR-A2', metadata: { model: 'MPFM-Demo-2', install_date: '2024-06-15', status: 'active', location: 'Demo-Alpha-A2' } },
-      { id: 29, company_id: 2, hierarchy_id: 23, device_type_id: 4, serial_number: 'FLOW-SHR-A2', metadata: { model: 'FM-Demo-1', install_date: '2024-06-15', status: 'active', location: 'Demo-Alpha-A2' } },
-      
-      // Demo Well B1 (hierarchy_id: 25) - Multiple devices
       { id: 30, company_id: 2, hierarchy_id: 25, device_type_id: 1, serial_number: 'MPFM-SHR-B1', metadata: { model: 'MPFM-Demo-3', install_date: '2024-07-01', status: 'active', location: 'Demo-Beta-B1' } },
-      { id: 31, company_id: 2, hierarchy_id: 25, device_type_id: 2, serial_number: 'PRES-SHR-B1', metadata: { model: 'PS-Demo-2', install_date: '2024-07-01', status: 'active', location: 'Demo-Beta-B1' } },
-      { id: 32, company_id: 2, hierarchy_id: 25, device_type_id: 5, serial_number: 'VIB-SHR-B1', metadata: { model: 'VS-Demo-1', install_date: '2024-07-01', status: 'active', location: 'Demo-Beta-B1' } },
-      
-      // Demo Well B2 (hierarchy_id: 26) - Multiple devices
       { id: 33, company_id: 2, hierarchy_id: 26, device_type_id: 1, serial_number: 'MPFM-SHR-B2', metadata: { model: 'MPFM-Demo-4', install_date: '2024-07-15', status: 'active', location: 'Demo-Beta-B2' } },
-      { id: 34, company_id: 2, hierarchy_id: 26, device_type_id: 3, serial_number: 'TEMP-SHR-B2', metadata: { model: 'TS-Demo-2', install_date: '2024-07-15', status: 'active', location: 'Demo-Beta-B2' } },
-      
-      // Well-D1 (hierarchy_id: 29) - Multiple devices
       { id: 35, company_id: 2, hierarchy_id: 29, device_type_id: 1, serial_number: 'MPFM-SHR-D1', metadata: { model: 'MPFM-UAE-1', install_date: '2024-08-01', status: 'active', location: 'Dubai-Well-D1' } },
-      { id: 36, company_id: 2, hierarchy_id: 29, device_type_id: 2, serial_number: 'PRES-SHR-D1', metadata: { model: 'PS-UAE-1', install_date: '2024-08-01', status: 'active', location: 'Dubai-Well-D1' } },
-      { id: 37, company_id: 2, hierarchy_id: 29, device_type_id: 5, serial_number: 'VIB-SHR-D1', metadata: { model: 'VS-UAE-1', install_date: '2024-08-01', status: 'active', location: 'Dubai-Well-D1' } },
-      
-      // Well-D2 (hierarchy_id: 30) - Multiple devices
       { id: 38, company_id: 2, hierarchy_id: 30, device_type_id: 1, serial_number: 'MPFM-SHR-D2', metadata: { model: 'MPFM-UAE-2', install_date: '2024-08-15', status: 'active', location: 'Dubai-Well-D2' } },
-      { id: 39, company_id: 2, hierarchy_id: 30, device_type_id: 4, serial_number: 'FLOW-SHR-D2', metadata: { model: 'FM-UAE-1', install_date: '2024-08-15', status: 'active', location: 'Dubai-Well-D2' } },
-      
-      // Well-E1 (hierarchy_id: 34) - Multiple devices
       { id: 40, company_id: 2, hierarchy_id: 34, device_type_id: 1, serial_number: 'MPFM-SHR-E1', metadata: { model: 'MPFM-EGY-1', install_date: '2024-09-01', status: 'active', location: 'Cairo-Well-E1' } },
-      { id: 41, company_id: 2, hierarchy_id: 34, device_type_id: 3, serial_number: 'TEMP-SHR-E1', metadata: { model: 'TS-EGY-1', install_date: '2024-09-01', status: 'active', location: 'Cairo-Well-E1' } },
-      
-      // Well-E2 (hierarchy_id: 35) - Multiple devices
-      { id: 42, company_id: 2, hierarchy_id: 35, device_type_id: 1, serial_number: 'MPFM-SHR-E2', metadata: { model: 'MPFM-EGY-2', install_date: '2024-09-15', status: 'active', location: 'Cairo-Well-E2' } },
-      { id: 43, company_id: 2, hierarchy_id: 35, device_type_id: 2, serial_number: 'PRES-SHR-E2', metadata: { model: 'PS-EGY-1', install_date: '2024-09-15', status: 'active', location: 'Cairo-Well-E2' } },
-      { id: 44, company_id: 2, hierarchy_id: 35, device_type_id: 4, serial_number: 'FLOW-SHR-E2', metadata: { model: 'FM-EGY-1', install_date: '2024-09-15', status: 'active', location: 'Cairo-Well-E2' } }
+      { id: 42, company_id: 2, hierarchy_id: 35, device_type_id: 1, serial_number: 'MPFM-SHR-E2', metadata: { model: 'MPFM-EGY-2', install_date: '2024-09-15', status: 'active', location: 'Cairo-Well-E2' } }
     ];
 
-    // Insert devices
+    // Insert devices (only MPFM devices)
     for (const device of deviceData) {
       await database.query(`
         INSERT INTO device (id, company_id, hierarchy_id, device_type_id, serial_number, metadata) 
@@ -226,20 +167,20 @@ const seedHierarchyData = async () => {
       `, [device.id, device.company_id, device.hierarchy_id, device.device_type_id, device.serial_number, JSON.stringify(device.metadata)]);
     }
 
-    // Generate comprehensive device data for the last 24 hours
-    console.log('🔄 Generating device data for the last 30 days (1-minute intervals)...');
+    // Generate comprehensive device data for the last 24 hours for existing behaviour (every 5 minutes)
+    console.log('🔄 Generating device data for the last 24 hours (5-min resolution) for MPFM devices...');
     
     const generateDeviceData = (deviceId, serialNumber, baseValues) => {
       const dataPoints = [];
       const now = new Date();
       
-      // Generate data for last 30 days (every 1 minute = 43,200 data points)
-      for (let i = 43199; i >= 0; i--) {
-        const timestamp = new Date(now.getTime() - (i * 1 * 60 * 1000));
+      // Generate data for last 24 hours (every 5 minutes = 288 data points)
+      for (let i = 287; i >= 0; i--) {
+        const timestamp = new Date(now.getTime() - (i * 5 * 60 * 1000));
         
         // Add some realistic variation to the data
         const variation = 0.95 + (Math.random() * 0.1); // ±5% variation
-        const timeVariation = Math.sin((i / 1440) * 2 * Math.PI) * 0.05; // Daily cycle (1440 minutes per day)
+        const timeVariation = Math.sin((i / 288) * 2 * Math.PI) * 0.05; // Daily cycle
         
         const data = {
           GFR: Math.round((baseValues.GFR * variation * (1 + timeVariation)) * 100) / 100,
@@ -263,9 +204,8 @@ const seedHierarchyData = async () => {
       return dataPoints;
     };
 
-    // Base values for different device types/locations
+    // Base values for different device types/locations (only for MPFM ids present above)
     const deviceBaseValues = {
-      // Arabco devices - Higher production values
       1: { GFR: 9600, GOR: 10, GVF: 75, OFR: 850, WFR: 2200, WLR: 72, PressureAvg: 6.5, TemperatureAvg: 26 },
       4: { GFR: 8800, GOR: 12, GVF: 78, OFR: 780, WFR: 2100, WLR: 73, PressureAvg: 6.2, TemperatureAvg: 27 },
       7: { GFR: 9200, GOR: 11, GVF: 76, OFR: 820, WFR: 2150, WLR: 72, PressureAvg: 6.3, TemperatureAvg: 26 },
@@ -275,11 +215,11 @@ const seedHierarchyData = async () => {
       18: { GFR: 7200, GOR: 14, GVF: 71, OFR: 620, WFR: 1750, WLR: 74, PressureAvg: 5.7, TemperatureAvg: 28 },
       20: { GFR: 5500, GOR: 18, GVF: 65, OFR: 450, WFR: 1300, WLR: 76, PressureAvg: 5.2, TemperatureAvg: 30 },
       23: { GFR: 5800, GOR: 17, GVF: 66, OFR: 480, WFR: 1350, WLR: 75, PressureAvg: 5.3, TemperatureAvg: 29 },
-      
-      // Saher Flow devices - Demo/Test values
-      25: { GFR: 5000, GOR: 8, GVF: 60, OFR: 450, WFR: 1200, WLR: 70, PressureAvg: 5.0, TemperatureAvg: 25 },
+
+      // Saher Flow devices - demo MPFM base values
+      25: { GFR: 5300, GOR: 9, GVF: 62, OFR: 480, WFR: 1250, WLR: 70, PressureAvg: 5.1, TemperatureAvg: 25 },
       28: { GFR: 4800, GOR: 9, GVF: 62, OFR: 430, WFR: 1150, WLR: 71, PressureAvg: 4.8, TemperatureAvg: 24 },
-      30: { GFR: 5200, GOR: 7, GVF: 58, OFR: 470, WFR: 1250, WLR: 69, PressureAvg: 5.2, TemperatureAvg: 26 },
+      30: { GFR: 5000, GOR: 8, GVF: 60, OFR: 450, WFR: 1200, WLR: 70, PressureAvg: 5.0, TemperatureAvg: 25 },
       33: { GFR: 4900, GOR: 10, GVF: 61, OFR: 440, WFR: 1180, WLR: 72, PressureAvg: 4.9, TemperatureAvg: 25 },
       35: { GFR: 6200, GOR: 6, GVF: 55, OFR: 560, WFR: 1400, WLR: 68, PressureAvg: 5.5, TemperatureAvg: 27 },
       38: { GFR: 6000, GOR: 7, GVF: 57, OFR: 540, WFR: 1350, WLR: 69, PressureAvg: 5.3, TemperatureAvg: 26 },
@@ -287,28 +227,28 @@ const seedHierarchyData = async () => {
       42: { GFR: 4700, GOR: 11, GVF: 64, OFR: 420, WFR: 1130, WLR: 72, PressureAvg: 4.7, TemperatureAvg: 24 }
     };
 
-    // Generate data for MPFM devices only (they have comprehensive flow data)
-    const mpfmDevices = [25]; // Only seed data for MPFM-SHR-A1 device
-    
+    // Generate 5-minute resolution data for MPFM devices (existing behavior)
+    const mpfmDevices = [1, 4, 7, 10, 13, 15, 18, 20, 23, 25, 28, 30, 33, 35, 38, 40, 42];
+
     for (const deviceId of mpfmDevices) {
       if (deviceBaseValues[deviceId]) {
         const device = deviceData.find(d => d.id === deviceId);
         if (device) {
           const dataPoints = generateDeviceData(deviceId, device.serial_number, deviceBaseValues[deviceId]);
-          
+
           // Insert data in batches to avoid memory issues
           const batchSize = 50;
           for (let i = 0; i < dataPoints.length; i += batchSize) {
             const batch = dataPoints.slice(i, i + batchSize);
             const values = [];
             const placeholders = [];
-            
+
             batch.forEach((point, index) => {
               const baseIndex = index * 4;
               placeholders.push(`($${baseIndex + 1}, $${baseIndex + 2}, $${baseIndex + 3}, $${baseIndex + 4})`);
               values.push(point.device_id, point.serial_number, point.created_at, point.data);
             });
-            
+
             if (values.length > 0) {
               await database.query(`
                 INSERT INTO device_data (device_id, serial_number, created_at, data) 
@@ -316,7 +256,7 @@ const seedHierarchyData = async () => {
               `, values);
             }
           }
-          
+
           // Update device_latest table with most recent data
           const latestData = dataPoints[dataPoints.length - 1];
           await database.query(`
@@ -336,6 +276,106 @@ const seedHierarchyData = async () => {
           ]);
         }
       }
+    }
+
+    // ---------------------------------------------------------
+    // NEW: Generate 1-minute interval data for the single device (id: 25)
+    // This will create 1,440 entries per day and 43,200 entries for 30 days.
+    // By request, device 25 (MPFM-SHR-A1) will have minute-level data for 30 days.
+    // ---------------------------------------------------------
+
+    const generateDeviceDataPerMinute = (deviceId, serialNumber, baseValues, totalMinutes) => {
+      const dataPoints = [];
+      const now = new Date();
+
+      for (let i = totalMinutes - 1; i >= 0; i--) {
+        const timestamp = new Date(now.getTime() - (i * 60 * 1000)); // every 1 minute
+
+        // variation and daily cycle based on minute of day
+        const minuteOfDay = (Math.floor((totalMinutes - 1 - i) % 1440));
+        const variation = 0.95 + (Math.random() * 0.1);
+        const timeVariation = Math.sin((minuteOfDay / 1440) * 2 * Math.PI) * 0.05;
+
+        const data = {
+          GFR: Math.round((baseValues.GFR * variation * (1 + timeVariation)) * 100) / 100,
+          GOR: Math.round((baseValues.GOR * variation) * 100) / 100,
+          GVF: Math.round((baseValues.GVF * variation) * 100) / 100,
+          OFR: Math.round((baseValues.OFR * variation * (1 + timeVariation)) * 100) / 100,
+          WFR: Math.round((baseValues.WFR * variation * (1 + timeVariation)) * 100) / 100,
+          WLR: Math.round((baseValues.WLR * variation) * 100) / 100,
+          PressureAvg: Math.round((baseValues.PressureAvg * variation) * 100) / 100,
+          TemperatureAvg: Math.round((baseValues.TemperatureAvg * variation) * 100) / 100
+        };
+
+        dataPoints.push({
+          device_id: deviceId,
+          serial_number: serialNumber,
+          created_at: timestamp,
+          data: JSON.stringify(data)
+        });
+      }
+
+      return dataPoints;
+    };
+
+    // Seed 30 days of 1-minute data for device 25 (MPFM-SHR-A1)
+    const seedForDays = 30; // default 30 days as requested
+    const minutesPerDay = 1440;
+    const totalMinutes = seedForDays * minutesPerDay; // 1440 * seedForDays
+
+    console.log(`🔁 Generating ${totalMinutes.toLocaleString()} minute-level rows for device id=25 (seedForDays=${seedForDays})...`);
+
+    const minuteDevice = deviceData.find(d => d.id === 25);
+    if (minuteDevice && deviceBaseValues[25]) {
+      const minuteDataPoints = generateDeviceDataPerMinute(25, minuteDevice.serial_number, deviceBaseValues[25], totalMinutes);
+
+      // Insert in batches to avoid memory/packet issues. Increase batchSize if your DB can handle larger batches.
+      const batchSize = 500; // 500 rows per INSERT -> 2000 values (4 values per row)
+      for (let i = 0; i < minuteDataPoints.length; i += batchSize) {
+        const batch = minuteDataPoints.slice(i, i + batchSize);
+        const values = [];
+        const placeholders = [];
+
+        batch.forEach((point, index) => {
+          const baseIndex = index * 4;
+          placeholders.push(`($${baseIndex + 1}, $${baseIndex + 2}, $${baseIndex + 3}, $${baseIndex + 4})`);
+          values.push(point.device_id, point.serial_number, point.created_at, point.data);
+        });
+
+        if (values.length > 0) {
+          await database.query(`
+            INSERT INTO device_data (device_id, serial_number, created_at, data)
+            VALUES ${placeholders.join(', ')}
+          `, values);
+        }
+
+        // Progress log every few batches to track seeding progress
+        if ((i / batchSize) % 20 === 0) {
+          console.log(`  • Inserted ${Math.min(i + batchSize, minuteDataPoints.length).toLocaleString()} / ${minuteDataPoints.length.toLocaleString()} rows...`);
+        }
+      }
+
+      // Update device_latest with the most recent minute point
+      const latestMinute = minuteDataPoints[minuteDataPoints.length - 1];
+      await database.query(`
+        INSERT INTO device_latest (device_id, serial_number, updated_at, data, received_at)
+        VALUES ($1, $2, $3, $4, $5)
+        ON CONFLICT (device_id) DO UPDATE SET
+          serial_number = EXCLUDED.serial_number,
+          updated_at = EXCLUDED.updated_at,
+          data = EXCLUDED.data,
+          received_at = EXCLUDED.received_at
+      `, [
+        latestMinute.device_id,
+        latestMinute.serial_number,
+        latestMinute.created_at,
+        latestMinute.data,
+        new Date()
+      ]);
+
+      console.log(`✅ Seeded ${minuteDataPoints.length.toLocaleString()} rows for device id=25 and updated device_latest.`);
+    } else {
+      console.warn('⚠️ Device id=25 or its base values not found. Skipping minute-level seeding.');
     }
 
     console.log('✅ Comprehensive hierarchy and device data seeded successfully');
@@ -360,7 +400,6 @@ const seedHierarchyData = async () => {
     `);
 
     console.log('\n📋 Comprehensive Hierarchy Structure:');
-    console.log(`📊 Generated ${43200} data points for MPFM-SHR-A1 device (30 days, 1-minute intervals)`);
     let currentCompany = '';
     
     hierarchyResult.rows.forEach(row => {
@@ -429,33 +468,7 @@ const seedDeviceDataMapping = async () => {
       { device_type_id: 1, variable_name: 'WFR', variable_tag: 'water_flow_rate', data_type: 'number', unit: 'STB/D', ui_order: 5 },
       { device_type_id: 1, variable_name: 'WLR', variable_tag: 'water_liquid_ratio', data_type: 'number', unit: '%', ui_order: 6 },
       { device_type_id: 1, variable_name: 'PressureAvg', variable_tag: 'pressure_average', data_type: 'number', unit: 'bar', ui_order: 7 },
-      { device_type_id: 1, variable_name: 'TemperatureAvg', variable_tag: 'temperature_average', data_type: 'number', unit: '°C', ui_order: 8 },
-      
-      // Pressure Sensor mappings
-      { device_type_id: 2, variable_name: 'Pressure', variable_tag: 'pressure', data_type: 'number', unit: 'bar', ui_order: 1 },
-      { device_type_id: 2, variable_name: 'PressureMin', variable_tag: 'pressure_min', data_type: 'number', unit: 'bar', ui_order: 2 },
-      { device_type_id: 2, variable_name: 'PressureMax', variable_tag: 'pressure_max', data_type: 'number', unit: 'bar', ui_order: 3 },
-      { device_type_id: 2, variable_name: 'PressureAvg', variable_tag: 'pressure_avg', data_type: 'number', unit: 'bar', ui_order: 4 },
-      
-      // Temperature Sensor mappings
-      { device_type_id: 3, variable_name: 'Temperature', variable_tag: 'temperature', data_type: 'number', unit: '°C', ui_order: 1 },
-      { device_type_id: 3, variable_name: 'TemperatureMin', variable_tag: 'temperature_min', data_type: 'number', unit: '°C', ui_order: 2 },
-      { device_type_id: 3, variable_name: 'TemperatureMax', variable_tag: 'temperature_max', data_type: 'number', unit: '°C', ui_order: 3 },
-      { device_type_id: 3, variable_name: 'TemperatureAvg', variable_tag: 'temperature_avg', data_type: 'number', unit: '°C', ui_order: 4 },
-      
-      // Flow Meter mappings
-      { device_type_id: 4, variable_name: 'FlowRate', variable_tag: 'flow_rate', data_type: 'number', unit: 'STB/D', ui_order: 1 },
-      { device_type_id: 4, variable_name: 'FlowRateMin', variable_tag: 'flow_rate_min', data_type: 'number', unit: 'STB/D', ui_order: 2 },
-      { device_type_id: 4, variable_name: 'FlowRateMax', variable_tag: 'flow_rate_max', data_type: 'number', unit: 'STB/D', ui_order: 3 },
-      { device_type_id: 4, variable_name: 'FlowRateAvg', variable_tag: 'flow_rate_avg', data_type: 'number', unit: 'STB/D', ui_order: 4 },
-      { device_type_id: 4, variable_name: 'TotalVolume', variable_tag: 'total_volume', data_type: 'number', unit: 'STB', ui_order: 5 },
-      
-      // Vibration Sensor mappings
-      { device_type_id: 5, variable_name: 'VibrationX', variable_tag: 'vibration_x', data_type: 'number', unit: 'mm/s', ui_order: 1 },
-      { device_type_id: 5, variable_name: 'VibrationY', variable_tag: 'vibration_y', data_type: 'number', unit: 'mm/s', ui_order: 2 },
-      { device_type_id: 5, variable_name: 'VibrationZ', variable_tag: 'vibration_z', data_type: 'number', unit: 'mm/s', ui_order: 3 },
-      { device_type_id: 5, variable_name: 'VibrationRMS', variable_tag: 'vibration_rms', data_type: 'number', unit: 'mm/s', ui_order: 4 },
-      { device_type_id: 5, variable_name: 'Frequency', variable_tag: 'frequency', data_type: 'number', unit: 'Hz', ui_order: 5 }
+      { device_type_id: 1, variable_name: 'TemperatureAvg', variable_tag: 'temperature_average', data_type: 'number', unit: '°C', ui_order: 8 }
     ];
 
     // Insert device data mappings
