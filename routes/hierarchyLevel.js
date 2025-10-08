@@ -1,13 +1,14 @@
 const express = require('express');
 const HierarchyLevel = require('../models/HierarchyLevel');
 const { protect } = require('../middleware/auth');
+const { cacheMiddleware } = require('../utils/cache');
 
 const router = express.Router();
 
 // @desc    Get all hierarchy levels
 // @route   GET /api/hierarchy-level
 // @access  Private
-router.get('/', protect, async (req, res) => {
+router.get('/', protect, cacheMiddleware('hierarchy_levels', 300000), async (req, res) => {
   try {
     const levels = await HierarchyLevel.findAll();
 

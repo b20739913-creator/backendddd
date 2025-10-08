@@ -25,7 +25,10 @@ const protect = async (req, res, next) => {
     // Verify token (jwt.verify throws if invalid/expired)
     let decoded;
     try {
-      decoded = jwt.verify(token, process.env.JWT_SECRET || 'your_jwt_secret_here');
+      if (!process.env.JWT_SECRET) {
+        throw new Error('JWT_SECRET is not configured');
+      }
+      decoded = jwt.verify(token, process.env.JWT_SECRET);
     } catch (err) {
       return res.status(401).json({
         success: false,

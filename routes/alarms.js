@@ -4,6 +4,7 @@ const DeviceAlarm = require('../models/DeviceAlarm');
 const AlarmType = require('../models/AlarmType');
 const AlarmStatus = require('../models/AlarmStatus');
 const { protect, admin } = require('../middleware/auth');
+const { cacheMiddleware } = require('../utils/cache');
 
 const router = express.Router();
 
@@ -292,7 +293,7 @@ router.put('/:id/status', protect, [
 // @desc    Get alarm types
 // @route   GET /api/alarms/types
 // @access  Private
-router.get('/types/all', protect, async (req, res) => {
+router.get('/types/all', protect, cacheMiddleware('alarm_types', 300000), async (req, res) => {
   try {
     const alarmTypes = await AlarmType.findAll();
 
@@ -315,7 +316,7 @@ router.get('/types/all', protect, async (req, res) => {
 // @desc    Get alarm statuses
 // @route   GET /api/alarms/statuses
 // @access  Private
-router.get('/statuses/all', protect, async (req, res) => {
+router.get('/statuses/all', protect, cacheMiddleware('alarm_statuses', 300000), async (req, res) => {
   try {
     const alarmStatuses = await AlarmStatus.findAll();
 

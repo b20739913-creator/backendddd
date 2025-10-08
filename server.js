@@ -10,6 +10,17 @@ const cors = require('cors');
 // Load environment variables
 dotenv.config();
 
+// Validate critical environment variables
+const requiredEnvVars = ['JWT_SECRET', 'DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_NAME'];
+const missingEnvVars = requiredEnvVars.filter(varName => !process.env[varName]);
+
+if (missingEnvVars.length > 0) {
+  console.error('FATAL: Missing required environment variables:');
+  missingEnvVars.forEach(varName => console.error(`  - ${varName}`));
+  console.error('\nPlease set these variables in your .env file before starting the server.');
+  process.exit(1);
+}
+
 const app = express();
 
 // --- CONFIG ---
