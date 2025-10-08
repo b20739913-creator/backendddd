@@ -8,6 +8,12 @@ const { protect } = require('../middleware/auth');
 const { requireEmailVerification } = require('../middleware/emailVerification');
 const { validateCompanyDomain } = require('../middleware/domainValidation');
 const { validateEmailMiddleware } = require('../middleware/emailValidation');
+const {
+  authLimiter,
+  passwordResetLimiter,
+  verificationLimiter,
+  registrationLimiter
+} = require('../middleware/rateLimit');
 const User = require('../models/User');
 const Company = require('../models/Company');
 
@@ -38,7 +44,7 @@ router.post('/validate-email', validateEmailMiddleware, async (req, res) => {
 // @desc    Register user
 // @route   POST /api/auth/register
 // @access  Public
-router.post('/register', validateEmailMiddleware, validateCompanyDomain, [
+router.post('/register', registrationLimiter, validateEmailMiddleware, validateCompanyDomain, [
   body('firstName')
     .trim()
     .isLength({ min: 2, max: 50 })
@@ -150,9 +156,7 @@ router.post('/register', validateEmailMiddleware, validateCompanyDomain, [
 // @desc    Login user
 // @route   POST /api/auth/login
 // @access  Public
-
-
-router.post('/login', [
+router.post('/login', authLimiter, [
   
   body('email')
     .isEmail()
@@ -339,7 +343,7 @@ router.get('/verify-email/:token', async (req, res) => {
 // @desc    Forgot password
 // @route   POST /api/auth/forgot-password
 // @access  Public
-router.post('/forgot-password', [
+router.post('/forgot-password', passwordResetLimiter, [
   body('email')
     .isEmail()
     .normalizeEmail()
@@ -413,7 +417,7 @@ router.post('/forgot-password', [
 // @desc    Reset password
 // @route   PUT /api/auth/reset-password/:token
 // @access  Public
-router.put('/reset-password/:token', [
+router.put('/reset-password/:token', passwordResetLimiter, [
   body('password')
     .isLength({ min: 6 })
     .withMessage('Password must be at least 6 characters')
@@ -493,7 +497,7 @@ router.put('/reset-password/:token', [
 // @desc    Resend verification email
 // @route   POST /api/auth/resend-verification
 // @access  Public
-router.post('/resend-verification', [
+router.post('/resend-verification', verificationLimiter, [
   body('email')
     .isEmail()
     .normalizeEmail()
