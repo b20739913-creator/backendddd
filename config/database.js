@@ -241,13 +241,7 @@ class Database {
   }
 
   async query(text, params) {
-    const client = await this.pool.connect();
-    try {
-      const result = await client.query(text, params);
-      return result;
-    } finally {
-      client.release();
-    }
+    return this.pool.query(text, params);
   }
 
   async transaction(callback) {

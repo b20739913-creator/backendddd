@@ -1,26 +1,38 @@
 const express = require('express');
+const { param, query, body, validationResult } = require('express-validator');
 const { protect } = require('../middleware/auth');
 const database = require('../config/database');
 
 const router = express.Router();
 
+const validate = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      success: false,
+      message: 'Validation failed',
+      errors: errors.array()
+    });
+  }
+  next();
+};
+
 // @desc    Get devices for a specific hierarchy (region/area/field/well)
 // @route   GET /api/devices/hierarchy/:hierarchyId
 // @access  Private
-router.get('/hierarchy/:hierarchyId', protect, async (req, res) => {
+router.get('/hierarchy/:hierarchyId', [
+  protect,
+  param('hierarchyId').isInt({ min: 1 }).withMessage('Hierarchy ID must be a positive integer'),
+  query('search').optional().isString().trim().isLength({ max: 100 }).withMessage('Search must be a string with max 100 characters'),
+  query('status').optional().isIn(['all', 'online', 'offline']).withMessage('Status must be all, online, or offline'),
+  query('deviceType').optional().isString().trim().isLength({ max: 100 }).withMessage('Device type must be a string with max 100 characters'),
+  validate
+], async (req, res) => {
   try {
     const hierarchyId = parseInt(req.params.hierarchyId);
     const search = req.query.search || '';
-    const status = req.query.status || 'all'; // all, online, offline
+    const status = req.query.status || 'all';
     const deviceType = req.query.deviceType || 'all';
-
-    // Validate hierarchyId
-    if (!hierarchyId || isNaN(hierarchyId)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid hierarchy ID provided'
-      });
-    }
 
     // Check if hierarchy exists and user has access
     const hierarchyCheck = await database.query(`
@@ -238,7 +250,16 @@ router.get('/hierarchy/:hierarchyId', protect, async (req, res) => {
 // @desc    Get all devices for user's company
 // @route   GET /api/devices
 // @access  Private
-router.get('/', protect, async (req, res) => {
+router.get('/', [
+  protect,
+  query('company_id').optional().isInt({ min: 1 }).withMessage('Company ID must be a positive integer'),
+  query('search').optional().isString().trim().isLength({ max: 100 }).withMessage('Search must be a string with max 100 characters'),
+  query('status').optional().isIn(['all', 'online', 'offline']).withMessage('Status must be all, online, or offline'),
+  query('deviceType').optional().isString().trim().isLength({ max: 100 }).withMessage('Device type must be a string with max 100 characters'),
+  query('page').optional().isInt({ min: 1 }).withMessage('Page must be a positive integer'),
+  query('limit').optional().isInt({ min: 1, max: 100 }).withMessage('Limit must be between 1 and 100'),
+  validate
+], async (req, res) => {
   try {
     let company_id = req.user.company_id;
     const search = req.query.search || '';
@@ -443,16 +464,13 @@ router.get('/', protect, async (req, res) => {
 // @desc    Get device by ID with detailed information
 // @route   GET /api/devices/:id
 // @access  Private
-router.get('/:id', protect, async (req, res) => {
+router.get('/:id', [
+  protect,
+  param('id').isInt({ min: 1 }).withMessage('Device ID must be a positive integer'),
+  validate
+], async (req, res) => {
   try {
     const deviceId = parseInt(req.params.id);
-
-    if (!deviceId || isNaN(deviceId)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid device ID provided'
-      });
-    }
 
     const query = `
       SELECT 
@@ -569,7 +587,12 @@ router.get('/:id', protect, async (req, res) => {
 // @desc    Update device metadata
 // @route   PUT /api/devices/:id
 // @access  Private (Admin only)
-router.put('/:id', protect, async (req, res) => {
+router.put('/:id', [
+  protect,
+  param('id').isInt({ min: 1 }).withMessage('Device ID must be a positive integer'),
+  body('metadata').optional().isObject().withMessage('Metadata must be a valid JSON object'),
+  validate
+], async (req, res) => {
   try {
     // Check if user is admin
     if (req.user.role !== 'admin') {
@@ -581,13 +604,6 @@ router.put('/:id', protect, async (req, res) => {
 
     const deviceId = parseInt(req.params.id);
     const { metadata } = req.body;
-
-    if (!deviceId || isNaN(deviceId)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid device ID provided'
-      });
-    }
 
     // Check if device exists
     const deviceCheck = await database.query('SELECT id FROM device WHERE id = $1', [deviceId]);

@@ -2,7 +2,7 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const crypto = require('crypto');
 const generateToken = require('../utils/generateToken');
-const sendEmail = require('../utils/sendEmail');
+const emailQueue = require('../utils/emailQueue');
 const { getWelcomeEmailTemplate, getPasswordResetEmailTemplate } = require('../utils/emailTemplates');
 const { protect } = require('../middleware/auth');
 const { requireEmailVerification } = require('../middleware/emailVerification');
@@ -111,39 +111,27 @@ router.post('/register', registrationLimiter, validateEmailMiddleware, validateC
     // Create verification URL
     const verificationUrl = `http://localhost:5000/api/auth/verify-email/${verificationToken}`;
 
-    try {
-      // Send verification email
-      await sendEmail({
-        email: user.email,
-        subject: 'Email Verification - Saher Flow Solutions',
-        html: getWelcomeEmailTemplate(firstName, verificationUrl)
-      });
+    // Queue verification email for background sending
+    emailQueue.add({
+      email: user.email,
+      subject: 'Email Verification - Saher Flow Solutions',
+      html: getWelcomeEmailTemplate(firstName, verificationUrl)
+    });
 
-      res.status(201).json({
-        success: true,
-        message: 'User registered successfully. Please check your email to verify your account.',
-        data: {
-          user: {
-            id: user._id,
-            firstName: firstName,
-            lastName: lastName,
-            email: user.email,
-            company: req.approvedCompany.name,
-            isEmailVerified: user.is_email_verified
-          }
+    res.status(201).json({
+      success: true,
+      message: 'User registered successfully. Please check your email to verify your account.',
+      data: {
+        user: {
+          id: user._id,
+          firstName: firstName,
+          lastName: lastName,
+          email: user.email,
+          company: req.approvedCompany.name,
+          isEmailVerified: user.is_email_verified
         }
-      });
-    } catch (emailError) {
-      console.error('Verification email failed:', emailError);
-      
-      // Delete user if email fails to send
-      await User.delete(user.id);
-      
-      res.status(500).json({
-        success: false,
-        message: 'Registration failed. Could not send verification email. Please try again.'
-      });
-    }
+      }
+    });
   } catch (error) {
     console.error('Registration error:', error);
     res.status(500).json({
@@ -378,33 +366,17 @@ router.post('/forgot-password', passwordResetLimiter, [
     // Create reset URL
     const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
 
-    try {
-      // Send password reset email
-      await sendEmail({
-        email: user.email,
-        subject: 'Password Reset Request - Saher Flow Solutions',
-        html: getPasswordResetEmailTemplate(user.name.split(' ')[0] || user.name, resetUrl)
-      });
+    // Queue password reset email for background sending
+    emailQueue.add({
+      email: user.email,
+      subject: 'Password Reset Request - Saher Flow Solutions',
+      html: getPasswordResetEmailTemplate(user.name.split(' ')[0] || user.name, resetUrl)
+    });
 
-      res.json({
-        success: true,
-        message: 'Password reset email sent successfully'
-      });
-    } catch (emailError) {
-      console.error('Password reset email failed:', emailError);
-      
-      // Clear reset token if email fails
-      const database = require('../config/database');
-      await database.query(
-        'UPDATE "user" SET password_reset_token = null, password_reset_expires = null WHERE id = $1',
-        [user.id]
-      );
-      
-      res.status(500).json({
-        success: false,
-        message: 'Could not send password reset email'
-      });
-    }
+    res.json({
+      success: true,
+      message: 'Password reset email sent successfully'
+    });
   } catch (error) {
     console.error('Forgot password error:', error);
     res.status(500).json({
@@ -540,25 +512,17 @@ router.post('/resend-verification', verificationLimiter, [
     // Create verification URL
     const verificationUrl = `${process.env.API_URL || 'http://localhost:5000'}/api/auth/verify-email/${verificationToken}`;
 
-    try {
-      // Send verification email
-      await sendEmail({
-        email: user.email,
-        subject: 'Email Verification - Saher Flow Solutions',
-        html: getWelcomeEmailTemplate(user.name.split(' ')[0] || user.name, verificationUrl)
-      });
+    // Queue verification email for background sending
+    emailQueue.add({
+      email: user.email,
+      subject: 'Email Verification - Saher Flow Solutions',
+      html: getWelcomeEmailTemplate(user.name.split(' ')[0] || user.name, verificationUrl)
+    });
 
-      res.json({
-        success: true,
-        message: 'Verification email sent successfully'
-      });
-    } catch (emailError) {
-      console.error('Verification email failed:', emailError);
-      res.status(500).json({
-        success: false,
-        message: 'Could not send verification email'
-      });
-    }
+    res.json({
+      success: true,
+      message: 'Verification email sent successfully'
+    });
   } catch (error) {
     console.error('Resend verification error:', error);
     res.status(500).json({
