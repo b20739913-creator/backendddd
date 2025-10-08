@@ -109,7 +109,11 @@ router.post('/register', registrationLimiter, validateEmailMiddleware, validateC
     await user.save();
 
     // Create verification URL
-    const verificationUrl = `http://localhost:5000/api/auth/verify-email/${verificationToken}`;
+    const apiBaseUrl = process.env.API_URL || process.env.API_BASE_URL;
+    if (!apiBaseUrl) {
+      throw new Error('API_URL or API_BASE_URL environment variable must be set');
+    }
+    const verificationUrl = `${apiBaseUrl}/api/auth/verify-email/${verificationToken}`;
 
     // Queue verification email for background sending
     emailQueue.add({
@@ -310,7 +314,7 @@ router.get('/verify-email/:token', async (req, res) => {
             <div class="success-icon">✅</div>
             <h2 style="color: #1a3a5c;">Email Verified Successfully!</h2>
             <p>Your email address has been verified. You can now access all features of your account.</p>
-            <a href="${process.env.CLIENT_URL || 'http://localhost:5173'}" class="btn">Go to Dashboard</a>
+            <a href="${process.env.CLIENT_URL || process.env.CLIENT_BASE_URL || '#'}" class="btn">Go to Dashboard</a>
             <p style="margin-top: 30px; color: #666; font-size: 14px;">
               You can now close this window and return to the application.
             </p>
@@ -364,7 +368,11 @@ router.post('/forgot-password', passwordResetLimiter, [
     await user.save({ validateBeforeSave: false });
 
     // Create reset URL
-    const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
+    const clientBaseUrl = process.env.CLIENT_URL || process.env.CLIENT_BASE_URL;
+    if (!clientBaseUrl) {
+      throw new Error('CLIENT_URL or CLIENT_BASE_URL environment variable must be set');
+    }
+    const resetUrl = `${clientBaseUrl}/reset-password/${resetToken}`;
 
     // Queue password reset email for background sending
     emailQueue.add({
@@ -510,7 +518,11 @@ router.post('/resend-verification', verificationLimiter, [
     await user.save();
 
     // Create verification URL
-    const verificationUrl = `${process.env.API_URL || 'http://localhost:5000'}/api/auth/verify-email/${verificationToken}`;
+    const apiBaseUrl = process.env.API_URL || process.env.API_BASE_URL;
+    if (!apiBaseUrl) {
+      throw new Error('API_URL or API_BASE_URL environment variable must be set');
+    }
+    const verificationUrl = `${apiBaseUrl}/api/auth/verify-email/${verificationToken}`;
 
     // Queue verification email for background sending
     emailQueue.add({
